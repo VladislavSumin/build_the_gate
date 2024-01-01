@@ -1,0 +1,4 @@
+# Устанавливаем "runner" для wasm таргета, подробнее:
+# https://bevy-cheatbook.github.io/platforms/wasm.html
+[target.wasm32-unknown-unknown]
+runner = "wasm-server-runner"
