@@ -48,13 +48,18 @@ jobs:
           --out-name "build_the_gate"
           ./target/wasm32-unknown-unknown/release/build_the_gate.wasm
 
+      - name: Copy output to pages directory
+        run: >-
+          cp -r ./out ./pages/out &&
+          cp ./index.html ./pages/index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './index.html'
+          path: './pages'
 
       - name: Deploy to GitHub Pages
         id: deployment
