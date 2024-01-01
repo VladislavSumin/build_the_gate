@@ -50,6 +50,7 @@ jobs:
 
       - name: Copy output to pages directory
         run: >-
+          mkdir ./pages &&
           cp -r ./out ./pages/out &&
           cp ./index.html ./pages/index.html
 
