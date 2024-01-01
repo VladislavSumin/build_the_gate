@@ -35,6 +35,10 @@ jobs:
           --release 
           --target wasm32-unknown-unknown
 
+      - name: Install wasm-bindgen-cli
+        run: >-
+          cargo install wasm-bindgen-cli
+
       - name: Wasm bindgen
         run: >-
           wasm-bindgen 
