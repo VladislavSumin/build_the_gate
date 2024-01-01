@@ -25,6 +25,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install wasm32-unknown-unknown target
+        run: >-
+          rustup target install wasm32-unknown-unknown
+
       - name: Build
         run: >-
           cargo build 
