@@ -23,14 +23,28 @@ fn ui_example_system(
     mut contexts: EguiContexts,
     diagnostics: Res<DiagnosticsStore>,
 ) {
-    let fps = diagnostics
-        .get(FrameTimeDiagnosticsPlugin::FPS)
-        .and_then(|fps| fps.value())
-        .unwrap_or(0.) as u32;
+    let fps_diagnostics = diagnostics
+        .get(FrameTimeDiagnosticsPlugin::FPS);
 
-    egui::Window::new("Debug").show(contexts.ctx_mut(), |ui| {
-        ui.label(format!("FPS {}", fps));
-    });
+    match fps_diagnostics {
+        None => { return; }
+        Some(fps) => {
+            let current_fps = fps.value().unwrap_or_default() as u32;
+            let smoothed_fps = fps.smoothed().unwrap_or_default() as u32;
+            let average_fps = fps.average().unwrap_or_default() as u32;
+            let min_fps = fps.values()
+                .map(|x| { *x })
+                .min_by(|a, b| a.partial_cmp(b).unwrap())
+                .unwrap_or_default() as u32;
+
+            egui::Window::new("FPS").show(contexts.ctx_mut(), |ui| {
+                ui.label(format!("current {}", current_fps));
+                ui.label(format!("smoothed {}", smoothed_fps));
+                ui.label(format!("average {}", average_fps));
+                ui.label(format!("min (per last 20 frame) {}", min_fps));
+            });
+        }
+    }
 }
 
 fn setup(
