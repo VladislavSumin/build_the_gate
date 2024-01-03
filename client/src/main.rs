@@ -1,25 +1,41 @@
 mod camera;
 mod key_binding;
+mod main_menu;
+mod game_state;
 
 use bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
 use bevy::prelude::*;
 use bevy_egui::{egui, EguiContexts, EguiPlugin};
 use crate::camera::CameraPlugin;
+use crate::game_state::GameState;
 use crate::key_binding::KeyBindingsPlugin;
+use crate::main_menu::MainMenuPlugin;
 
 fn main() {
     App::new()
+        // Встроенные в bevy плагины
         .add_plugins(DefaultPlugins)
-        .add_plugins(EguiPlugin)
         .add_plugins(FrameTimeDiagnosticsPlugin)
+
+        // Сторонние плагины
+        .add_plugins(EguiPlugin)
+
+        // Внутренние плагины
         .add_plugins(KeyBindingsPlugin)
+        .add_plugins(MainMenuPlugin)
         .add_plugins(CameraPlugin)
+
+        // Инициализация состояний
+        .add_state::<GameState>()
+
+        // Тестовые системы из main файла (временные)
         .add_systems(Startup, setup)
-        .add_systems(Update, ui_example_system)
+        .add_systems(Update, debug_fps_system)
+
         .run();
 }
 
-fn ui_example_system(
+fn debug_fps_system(
     mut contexts: EguiContexts,
     diagnostics: Res<DiagnosticsStore>,
 ) {
