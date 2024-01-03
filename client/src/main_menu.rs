@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_egui::{egui, egui::*, EguiContexts};
-use crate::game_state::GameState;
+use crate::game_state::{GameMode, GameState};
 
 
 /// Плагин отвечающий за отображение и логику основного меню
@@ -16,6 +16,7 @@ impl Plugin for MainMenuPlugin {
 fn on_update_main_main_menu(
     mut contexts: EguiContexts,
     mut game_state: ResMut<NextState<GameState>>,
+    mut game_mode: ResMut<NextState<GameMode>>,
 ) {
     let ctx = contexts.ctx_mut();
     egui::Window::new("Main menu")
@@ -32,8 +33,13 @@ fn on_update_main_main_menu(
         .show(contexts.ctx_mut(), |ui| {
             let single = ui.button("Single");
             if single.clicked() {
-                game_state.set(GameState::Game)
+                game_state.set(GameState::Game);
+                game_mode.set(GameMode::Single);
             }
-            ui.button("Multiplayer (WIP)")
+            let multiplayer = ui.button("Multiplayer");
+            if multiplayer.clicked() {
+                game_state.set(GameState::Game);
+                game_mode.set(GameMode::Multiplayer);
+            }
         });
 }

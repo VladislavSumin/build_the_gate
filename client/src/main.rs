@@ -9,9 +9,10 @@ use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
 use debug_info::DebugInfoRenderPlugin;
 use crate::camera::CameraPlugin;
-use crate::game_state::GameState;
+use crate::game_state::{GameMode, GameState};
 use crate::key_binding::KeyBindingsPlugin;
 use crate::main_menu::MainMenuPlugin;
+use crate::network::NetworkPlugin;
 
 fn main() {
     App::new()
@@ -27,17 +28,22 @@ fn main() {
         .add_plugins(KeyBindingsPlugin)
         .add_plugins(MainMenuPlugin)
         .add_plugins(CameraPlugin)
-        // TODO пока не готово
-        // .add_plugins(NetworkPlugin)
+        .add_plugins(NetworkPlugin)
 
         // Инициализация состояний
         .add_state::<GameState>()
+        .add_state::<GameMode>()
 
         // Тестовые системы из main файла (временные)
         .add_systems(OnEnter(GameState::Game), setup_game_state)
+        .add_systems(OnExit(GameState::Game), cleanup_game_state)
 
         .run();
 }
+
+/// Маркер тестового куба, нужен для возможности удалить тестовый куб
+#[derive(Component)]
+struct TestCube;
 
 fn setup_game_state(
     mut commands: Commands,
@@ -45,9 +51,20 @@ fn setup_game_state(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     // Спавним тестовый куб что бы была точка ориентира в мире
-    commands.spawn(PbrBundle {
-        mesh: meshes.add(shape::Cube::new(1.0).into()),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
-        ..default()
-    });
+    commands.spawn((
+        PbrBundle {
+            mesh: meshes.add(shape::Cube::new(1.0).into()),
+            material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+            ..default()
+        },
+        TestCube,
+    ));
+}
+
+fn cleanup_game_state(
+    mut commands: Commands,
+    test_cube_query: Query<Entity, With<TestCube>>,
+) {
+    let test_cube = test_cube_query.single();
+    commands.entity(test_cube).despawn();
 }
