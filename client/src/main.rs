@@ -31,12 +31,12 @@ fn main() {
         .add_state::<GameState>()
 
         // Тестовые системы из main файла (временные)
-        .add_systems(Startup, setup)
+        .add_systems(OnEnter(GameState::Game), setup_game_state)
 
         .run();
 }
 
-fn setup(
+fn setup_game_state(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
