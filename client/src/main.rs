@@ -2,6 +2,7 @@ mod camera;
 mod key_binding;
 mod main_menu;
 mod game_state;
+mod network;
 
 use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use bevy::prelude::*;
@@ -26,6 +27,8 @@ fn main() {
         .add_plugins(KeyBindingsPlugin)
         .add_plugins(MainMenuPlugin)
         .add_plugins(CameraPlugin)
+        // TODO пока не готово
+        // .add_plugins(NetworkPlugin)
 
         // Инициализация состояний
         .add_state::<GameState>()
