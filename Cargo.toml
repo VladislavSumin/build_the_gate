@@ -6,6 +6,7 @@ resolver = "2"
 members = [
     "feature/debug_info",
     "client",
+    "server",
 ]
 
 
@@ -15,3 +16,6 @@ bevy = "0.12"
 
 # egui - библиотека графического интерфейса для Rust, a bevy_egui - библиотека для работы с интефесами egui внутри bevy
 bevy_egui = "0.24"
+
+# Обертка над renet - библиотекой для организации сетевого взаимодействия
+bevy_renet = "0.0.10"

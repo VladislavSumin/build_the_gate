@@ -34,6 +34,7 @@ jobs:
           cargo build 
           --release 
           --target wasm32-unknown-unknown
+          --bin build_the_gate
 
       - name: Install wasm-bindgen-cli
         run: >-
