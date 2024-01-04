@@ -4,7 +4,7 @@ use bevy::input::mouse::MouseMotion;
 use bevy::math::vec3;
 use bevy::prelude::*;
 use bevy::window::{CursorGrabMode, PrimaryWindow};
-use crate::key_binding::KeyBindings;
+use key_bindings::KeyBindings;
 
 /// Структура плагина камеры.
 /// Данный плагин отвечает за настройку и перемещение камеры игрока

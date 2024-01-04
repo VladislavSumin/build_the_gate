@@ -9,3 +9,4 @@ bevy_egui = { workspace = true }
 bevy_renet = { workspace = true }
 
 debug_info = { path = "../feature/debug_info" }
+key_bindings = { path = "../feature/key_bindings" }

@@ -1,5 +1,4 @@
 mod camera;
-mod key_binding;
 mod main_menu;
 mod game_state;
 mod network;
@@ -8,9 +7,9 @@ use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
 use debug_info::DebugInfoRenderPlugin;
+use key_bindings::KeyBindingsPlugin;
 use crate::camera::CameraPlugin;
 use crate::game_state::{GameMode, GameState};
-use crate::key_binding::KeyBindingsPlugin;
 use crate::main_menu::MainMenuPlugin;
 use crate::network::NetworkPlugin;
 
